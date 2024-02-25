@@ -24,9 +24,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
     super.initState();
     _model = createModel(context, () => ItemsModel());
 
-    _model.ingredientsTextFieldController ??= TextEditingController();
-    _model.ingredientsTextFieldFocusNode ??= FocusNode();
-
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -91,87 +88,11 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 0.0, 0.0),
+                                      16.0, 0.0, 0.0, 30.0),
                                   child: Text(
                                     'Below are a list of all the ingredients that you have',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 8.0, 16.0, 16.0),
-                                  child: TextFormField(
-                                    controller:
-                                        _model.ingredientsTextFieldController,
-                                    focusNode:
-                                        _model.ingredientsTextFieldFocusNode,
-                                    onFieldSubmitted: (_) async {
-                                      setState(() {
-                                        _model.isEditing = false;
-                                      });
-                                    },
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Search',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      hintText: 'Look for an ingredient...',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              20.0, 0.0, 0.0, 0.0),
-                                      suffixIcon: Icon(
-                                        Icons.search_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    cursorColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    validator: _model
-                                        .ingredientsTextFieldControllerValidator
-                                        .asValidator(context),
                                   ),
                                 ),
                                 Padding(
@@ -609,33 +530,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
-                                                      Container(
-                                                        width: 44.0,
-                                                        height: 44.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .accent1,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                          border: Border.all(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.add_circle,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          size: 24.0,
-                                                        ),
-                                                      ),
                                                       Expanded(
                                                         flex: 4,
                                                         child: Padding(
@@ -662,7 +556,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                                                     .name,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyLarge,
+                                                                    .titleLarge,
                                                               ),
                                                               Padding(
                                                                 padding:
@@ -676,13 +570,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                                                   '',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .labelSmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Inter',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primary,
-                                                                      ),
+                                                                      .labelMedium,
                                                                 ),
                                                               ),
                                                             ].divide(const SizedBox(
@@ -846,14 +734,56 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                 ),
                                 Align(
                                   alignment: const AlignmentDirectional(0.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      context.pushNamed('HomePage');
+                                    },
+                                    text: 'Upload Ingredients',
+                                    options: FFButtonOptions(
+                                      height: 60.0,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 24.0, 0.0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            fontSize: 24.0,
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      hoverColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      hoverBorderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                      hoverTextColor:
+                                          FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                      hoverElevation: 0.0,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 20.0, 0.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        context.pushNamed('HomePage');
+                                        context.pushNamed('HomePageCopy');
                                       },
-                                      text: 'Upload Image',
+                                      text: 'Upload Receipt',
                                       options: FFButtonOptions(
                                         height: 60.0,
                                         padding: const EdgeInsetsDirectional.fromSTEB(

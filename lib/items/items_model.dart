@@ -10,11 +10,6 @@ class ItemsModel extends FlutterFlowModel<ItemsWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for ingredientsTextField widget.
-  FocusNode? ingredientsTextFieldFocusNode;
-  TextEditingController? ingredientsTextFieldController;
-  String? Function(BuildContext, String?)?
-      ingredientsTextFieldControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -24,8 +19,6 @@ class ItemsModel extends FlutterFlowModel<ItemsWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    ingredientsTextFieldFocusNode?.dispose();
-    ingredientsTextFieldController?.dispose();
   }
 
   /// Action blocks are added here.

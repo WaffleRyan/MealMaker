@@ -1,28 +1,26 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
+import '/edit_and_upload/loading_widget/loading_widget_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
-import '/open_ai_vision_a_p_i/loading_widget/loading_widget_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'home_page_model.dart';
-export 'home_page_model.dart';
+import 'edit_page_model.dart';
+export 'edit_page_model.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({super.key});
+class EditPageWidget extends StatefulWidget {
+  const EditPageWidget({super.key});
 
   @override
-  State<HomePageWidget> createState() => _HomePageWidgetState();
+  State<EditPageWidget> createState() => _EditPageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget>
+class _EditPageWidgetState extends State<EditPageWidget>
     with TickerProviderStateMixin {
-  late HomePageModel _model;
+  late EditPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -72,7 +70,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomePageModel());
+    _model = createModel(context, () => EditPageModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -80,6 +78,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
         _model.showResponse = false;
       });
     });
+
+    _model.ingredientNameController ??= TextEditingController();
+    _model.ingredientNameFocusNode ??= FocusNode();
 
     setupAnimations(
       animationsMap.values.where((anim) =>
@@ -110,7 +111,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: const AlignmentDirectional(0.0, -1.0),
+            alignment: const AlignmentDirectional(0.0, 0.0),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
@@ -126,8 +127,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     width: 1.0,
                   ),
                 ),
-                child: Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -154,7 +155,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Upload an Image of Your Ingredients',
+                                          'Add an Ingredient',
                                           style: FlutterFlowTheme.of(context)
                                               .headlineSmall,
                                         ),
@@ -163,7 +164,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 4.0, 0.0, 0.0),
                                           child: Text(
-                                            'Make sure the ingredients are easily visible',
+                                            'Type in the name of the ingredient below',
                                             style: FlutterFlowTheme.of(context)
                                                 .labelMedium,
                                           ),
@@ -419,216 +420,109 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          if (responsiveVisibility(
-                                            context: context,
-                                            tabletLandscape: false,
-                                            desktop: false,
-                                          ))
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 0.0, 16.0),
-                                              child: StreamBuilder<
-                                                  List<RequestsRecord>>(
-                                                stream: queryRequestsRecord(),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 50.0,
-                                                        height: 50.0,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          valueColor:
-                                                              AlwaysStoppedAnimation<
-                                                                  Color>(
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<RequestsRecord>
-                                                      containerRequestsRecordList =
-                                                      snapshot.data!;
-                                                  return Container(
-                                                    width: double.infinity,
-                                                    height: 360.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(4.0),
-                                                      child: InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          final selectedMedia =
-                                                              await selectMediaWithSourceBottomSheet(
-                                                            context: context,
-                                                            allowPhoto: true,
-                                                          );
-                                                          if (selectedMedia !=
-                                                                  null &&
-                                                              selectedMedia.every((m) =>
-                                                                  validateFileFormat(
-                                                                      m.storagePath,
-                                                                      context))) {
-                                                            setState(() => _model
-                                                                    .isDataUploading =
-                                                                true);
-                                                            var selectedUploadedFiles =
-                                                                <FFUploadedFile>[];
-
-                                                            var downloadUrls =
-                                                                <String>[];
-                                                            try {
-                                                              selectedUploadedFiles =
-                                                                  selectedMedia
-                                                                      .map((m) =>
-                                                                          FFUploadedFile(
-                                                                            name:
-                                                                                m.storagePath.split('/').last,
-                                                                            bytes:
-                                                                                m.bytes,
-                                                                            height:
-                                                                                m.dimensions?.height,
-                                                                            width:
-                                                                                m.dimensions?.width,
-                                                                            blurHash:
-                                                                                m.blurHash,
-                                                                          ))
-                                                                      .toList();
-
-                                                              downloadUrls =
-                                                                  (await Future
-                                                                          .wait(
-                                                                selectedMedia
-                                                                    .map(
-                                                                  (m) async =>
-                                                                      await uploadData(
-                                                                          m.storagePath,
-                                                                          m.bytes),
-                                                                ),
-                                                              ))
-                                                                      .where((u) =>
-                                                                          u !=
-                                                                          null)
-                                                                      .map((u) =>
-                                                                          u!)
-                                                                      .toList();
-                                                            } finally {
-                                                              _model.isDataUploading =
-                                                                  false;
-                                                            }
-                                                            if (selectedUploadedFiles
-                                                                        .length ==
-                                                                    selectedMedia
-                                                                        .length &&
-                                                                downloadUrls
-                                                                        .length ==
-                                                                    selectedMedia
-                                                                        .length) {
-                                                              setState(() {
-                                                                _model.uploadedLocalFile =
-                                                                    selectedUploadedFiles
-                                                                        .first;
-                                                                _model.uploadedFileUrl =
-                                                                    downloadUrls
-                                                                        .first;
-                                                              });
-                                                            } else {
-                                                              setState(() {});
-                                                              return;
-                                                            }
-                                                          }
-                                                        },
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                          child: Image.network(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model
-                                                                  .uploadedFileUrl,
-                                                              'https://t4.ftcdn.net/jpg/05/65/22/41/360_F_565224180_QNRiRQkf9Fw0dKRoZGwUknmmfk51SuSS.jpg',
-                                                            ),
-                                                            width: 500.0,
-                                                            height: 360.0,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                        ].divide(const SizedBox(height: 16.0)),
-                                      ),
-                                    ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        if (responsiveVisibility(
-                                          context: context,
-                                          phone: false,
-                                          tablet: false,
-                                        ))
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: 500.0,
-                                              height: 360.0,
-                                              decoration: BoxDecoration(
-                                                color:
+                                                    20.0, 10.0, 20.0, 22.0),
+                                            child: TextFormField(
+                                              controller: _model
+                                                  .ingredientNameController,
+                                              focusNode: _model
+                                                  .ingredientNameFocusNode,
+                                              autofillHints: const [
+                                                AutofillHints.name
+                                              ],
+                                              textCapitalization:
+                                                  TextCapitalization.words,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                labelText: 'Ingredient Name',
+                                                labelStyle:
                                                     FlutterFlowTheme.of(context)
+                                                        .labelMedium,
+                                                hintText:
+                                                    'Full Ingredient Name',
+                                                hintStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium,
+                                                errorStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                        ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .alternate,
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(4.0),
-                                                child: ClipRRect(
+                                                    width: 2.0,
+                                                  ),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0),
-                                                  child: Image.network(
-                                                    valueOrDefault<String>(
-                                                      _model.uploadedFileUrl,
-                                                      'https://t4.ftcdn.net/jpg/05/65/22/41/360_F_565224180_QNRiRQkf9Fw0dKRoZGwUknmmfk51SuSS.jpg',
-                                                    ),
-                                                    width: 500.0,
-                                                    height: 360.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
                                                 ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                contentPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16.0, 12.0,
+                                                            0.0, 12.0),
                                               ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium,
+                                              cursorColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              validator: _model
+                                                  .ingredientNameControllerValidator
+                                                  .asValidator(context),
                                             ),
                                           ),
-                                      ].addToEnd(const SizedBox(height: 16.0)),
+                                        ].divide(const SizedBox(height: 16.0)),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -723,29 +617,16 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               },
                                             ).then((value) => setState(() {}));
 
-                                            var requestsRecordReference =
-                                                RequestsRecord.collection.doc();
-                                            await requestsRecordReference
-                                                .set(createRequestsRecordData(
-                                              status: 'pending',
-                                              task: 'ingredients',
-                                              link: _model.uploadedFileUrl,
-                                              item: currentUserUid,
+                                            await IngredientsRecord.createDoc(
+                                                    currentUserReference!)
+                                                .set(
+                                                    createIngredientsRecordData(
+                                              name: _model
+                                                  .ingredientNameController
+                                                  .text,
                                             ));
-                                            _model.aiResponse = RequestsRecord
-                                                .getDocumentFromData(
-                                                    createRequestsRecordData(
-                                                      status: 'pending',
-                                                      task: 'ingredients',
-                                                      link: _model
-                                                          .uploadedFileUrl,
-                                                      item: currentUserUid,
-                                                    ),
-                                                    requestsRecordReference);
 
                                             context.pushNamed('items');
-
-                                            setState(() {});
                                           },
                                           text: 'Continue',
                                           options: FFButtonOptions(

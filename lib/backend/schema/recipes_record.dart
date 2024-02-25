@@ -26,11 +26,17 @@ class RecipesRecord extends FirestoreRecord {
   String get name => _name ?? '';
   bool hasName() => _name != null;
 
+  // "url" field.
+  String? _url;
+  String get url => _url ?? '';
+  bool hasUrl() => _url != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
     _calories = castToType<int>(snapshotData['calories']);
     _name = snapshotData['name'] as String?;
+    _url = snapshotData['url'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -75,11 +81,13 @@ class RecipesRecord extends FirestoreRecord {
 Map<String, dynamic> createRecipesRecordData({
   int? calories,
   String? name,
+  String? url,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'calories': calories,
       'name': name,
+      'url': url,
     }.withoutNulls,
   );
 
@@ -91,12 +99,14 @@ class RecipesRecordDocumentEquality implements Equality<RecipesRecord> {
 
   @override
   bool equals(RecipesRecord? e1, RecipesRecord? e2) {
-    return e1?.calories == e2?.calories && e1?.name == e2?.name;
+    return e1?.calories == e2?.calories &&
+        e1?.name == e2?.name &&
+        e1?.url == e2?.url;
   }
 
   @override
   int hash(RecipesRecord? e) =>
-      const ListEquality().hash([e?.calories, e?.name]);
+      const ListEquality().hash([e?.calories, e?.name, e?.url]);
 
   @override
   bool isValidKey(Object? o) => o is RecipesRecord;

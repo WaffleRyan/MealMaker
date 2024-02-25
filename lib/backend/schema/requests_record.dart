@@ -6,6 +6,7 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 class RequestsRecord extends FirestoreRecord {
   RequestsRecord._(
@@ -35,11 +36,17 @@ class RequestsRecord extends FirestoreRecord {
   String get item => _item ?? '';
   bool hasItem() => _item != null;
 
+  // "addcalories" field.
+  int? _addcalories;
+  int get addcalories => _addcalories ?? 0;
+  bool hasAddcalories() => _addcalories != null;
+
   void _initializeFields() {
     _status = snapshotData['status'] as String?;
     _task = snapshotData['task'] as String?;
     _link = snapshotData['link'] as String?;
     _item = snapshotData['item'] as String?;
+    _addcalories = castToType<int>(snapshotData['addcalories']);
   }
 
   static CollectionReference get collection =>
@@ -81,6 +88,7 @@ Map<String, dynamic> createRequestsRecordData({
   String? task,
   String? link,
   String? item,
+  int? addcalories,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -88,6 +96,7 @@ Map<String, dynamic> createRequestsRecordData({
       'task': task,
       'link': link,
       'item': item,
+      'addcalories': addcalories,
     }.withoutNulls,
   );
 
@@ -102,12 +111,13 @@ class RequestsRecordDocumentEquality implements Equality<RequestsRecord> {
     return e1?.status == e2?.status &&
         e1?.task == e2?.task &&
         e1?.link == e2?.link &&
-        e1?.item == e2?.item;
+        e1?.item == e2?.item &&
+        e1?.addcalories == e2?.addcalories;
   }
 
   @override
-  int hash(RequestsRecord? e) =>
-      const ListEquality().hash([e?.status, e?.task, e?.link, e?.item]);
+  int hash(RequestsRecord? e) => const ListEquality()
+      .hash([e?.status, e?.task, e?.link, e?.item, e?.addcalories]);
 
   @override
   bool isValidKey(Object? o) => o is RequestsRecord;

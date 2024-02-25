@@ -13,11 +13,9 @@ export '/account_profile_creation/auth_2_profile/auth2_profile_widget.dart'
     show Auth2ProfileWidget;
 export '/account_profile_creation/auth_2_edit_profile/auth2_edit_profile_widget.dart'
     show Auth2EditProfileWidget;
-export '/open_ai_vision_a_p_i/home_page/home_page_widget.dart'
-    show HomePageWidget;
+export '/edit_and_upload/home_page/home_page_widget.dart' show HomePageWidget;
 export '/items/items_widget.dart' show ItemsWidget;
-export '/open_ai_vision_a_p_i/home_page_copy/home_page_copy_widget.dart'
+export '/edit_and_upload/home_page_copy/home_page_copy_widget.dart'
     show HomePageCopyWidget;
 export '/items_copy/items_copy_widget.dart' show ItemsCopyWidget;
-export '/open_ai_vision_a_p_i/edit_page/edit_page_widget.dart'
-    show EditPageWidget;
+export '/edit_and_upload/edit_page/edit_page_widget.dart' show EditPageWidget;
