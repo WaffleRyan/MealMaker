@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "53771046328",
+    "firebase_url": "https://meal-maker-x6hjel-default-rtdb.firebaseio.com",
+    "project_id": "meal-maker-x6hjel",
+    "storage_bucket": "meal-maker-x6hjel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53771046328:android:a59b561c6278b30ad2d34d",
+        "android_client_info": {
+          "package_name": "com.mycompany.mealmaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53771046328-cfk6v503do25bdnegalibcqbk6n0fihp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mealmaker",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "53771046328-fb7ld9303ejv3b3osubbu2c593sp5k1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mealmaker",
+            "certificate_hash": "6db9f35b3216af7865b7710320d14e5c97a66bad"
+          }
+        },
+        {
+          "client_id": "53771046328-guhcco444dl67cfg1qgaomp669m7t3br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFkV5_CLHwJ5bk-NqkelGt9YrVxIoy4pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53771046328-guhcco444dl67cfg1qgaomp669m7t3br.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "53771046328-s6fogeqj57vic6emlhnvli4jsmgl4rdl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.mealmaker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
