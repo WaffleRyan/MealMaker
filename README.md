@@ -1,7 +1,5 @@
-# MealMaker
+# Nutrium
 
-A new Flutter project.
+Submission for HackTJ 11
 
-## Getting Started
-
-FlutterFlow projects are built to run on the Flutter _stable_ release.
+Backend code is in the backend folder, all other folders and files are front end
